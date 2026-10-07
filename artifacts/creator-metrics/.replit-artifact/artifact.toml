@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "CreatorMetrics"
+description = "A responsive Instagram engagement and pricing calculator for creators, with niche benchmarks, shareable pitch generation, local progress tracking, and downloadable scorecards."
+version = "1.0.0"
+id = "artifacts/creator-metrics"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23542
+
+[services.development]
+run = "pnpm --filter @workspace/creator-metrics run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/creator-metrics", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/creator-metrics/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23542"
+BASE_PATH = "/"
